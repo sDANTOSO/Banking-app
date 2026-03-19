@@ -10,13 +10,13 @@ public class Account
 {
     
     private String customerName;
-    private int accountNumber;// how to hyphenate or should i concatenate c
+    private String accountNumber;// how to hyphenate or should i concatenate c
     //create error prevention system
     private String customerAdress;
     private AccountType accountType;
     private float accountBalance;  
     
-    public Account(){
+    public Account(String customerName, String accountNumber, String customerAdress, AccountType accountType,float accountBalance){
         
         this.customerName=customerName;
         this.accountNumber=accountNumber;
