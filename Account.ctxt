@@ -1,0 +1,22 @@
+#BlueJ class context
+comment0.target=Account
+comment0.text=\r\n\ This\ is\ a\ constructor\ that\ will\ construct\ and\ edit\ peoples\ accounts\r\n\r\n\ @Santoso\ Winatan\r\n\ @19/03/26\r\n
+comment1.params=
+comment1.target=Account()
+comment2.params=newValue
+comment2.target=void\ setcustomerName(java.lang.String)
+comment3.params=
+comment3.target=java.lang.String\ getcustomerName()
+comment4.params=newValue
+comment4.target=void\ setcustomerAdress(java.lang.String)
+comment5.params=
+comment5.target=java.lang.String\ getcustomerAdress()
+comment6.params=newValue
+comment6.target=void\ setaccountType(AccountType)
+comment7.params=
+comment7.target=AccountType\ getaccountType()
+comment8.params=newValue
+comment8.target=void\ setaccountBalance(float)
+comment9.params=
+comment9.target=float\ getaccountBalance()
+numComments=10
