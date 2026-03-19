@@ -7,7 +7,7 @@
  *set account balance (setBalance)
  * @Santoso Winatan
  * @19/03/26
- */triple s accountType Float
+ */
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.IOException;
@@ -21,8 +21,26 @@ public class AccountDatabase
     // instance variables - replace the example below with your own
     private List<Account> accountDatabase = new ArrayList <Account>();
     
+    
+     
+    
     public void saveToFile(String filename){
-        //List
+        List<String> accountDetails= new ArrayList<String>();
+        filename = "accounts";
+        File myFile=new File (filename+".txt");
+        try{
+            FileWriter myWriter = new FileWriter(myFile);
+            
+            for (Account thisAccount: this.accountDatabase){
+                myWriter.write(thisAccount.getcustomerName()+";"+thisAccount.getaccountNumber()+";"+thisAccount.getcustomerAdress()+";"+thisAccount.getaccountType()+";"+thisAccount.getaccountBalance());
+            }
+            
+            myWriter.flush();
+            myWriter.close();
+        }catch(IOException e){
+            System.out.println("Error: could not write to the file.");
+        }
+        
     }
 
     public void loadFromFile(String filename){
@@ -34,11 +52,11 @@ public class AccountDatabase
             while (myReader.hasNextLine()){
                 String line = myReader.nextLine();
                 String[] AccountDetails = line.split(";");
-                accountDatabase.add(newAccount(AccountDetails[0],
-                                                AccountDetails[1],
-                                                AccountDetails[3],
-                                                String.toUpperCase(AccountDetails[4])
-                                                Float.parseFloat(AccountDetails[5]));
+                accountDatabase.add(new Account(AccountDetails[0],
+                                            AccountDetails[1],
+                                            AccountDetails[3],
+                                            AccountDetails[4].toUpperCase(),
+                                            Float.parseFloat(AccountDetails[5])));
                 
             }
         }catch(IOException e){
@@ -46,8 +64,8 @@ public class AccountDatabase
         }
     }
     
-    public void getBalance(String filename){
-        System.out.println(accountDatabase[1].getaccountBalance());
+    public void displayAll(String filename){
+        System.out.println(accountDatabase.get(0).getcustomerName());
     }
     
     

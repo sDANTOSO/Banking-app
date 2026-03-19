@@ -1,33 +1,31 @@
 
-/**
- * Write a description of class MainSystem here.
+/**from here the user should be able to do these thing or call functions that do these things
+ * *account creator (addAccount)
+ *close an account (closeAccount)
+ *get balance of an account (getBalance)
+ *set account balance (setBalance)
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @Santoso Winatan
+ * @20/03/26
  */
+import java.util.ArrayList;
+import java.util.Scanner;
 public class MainSystem
 {
-    // instance variables - replace the example below with your own
-    private int x;
-
-    /**
-     * Constructor for objects of class MainSystem
-     */
     public MainSystem()
     {
-        // initialise instance variables
-        x = 0;
-    }
+        Scanner keyboard = new Scanner (System.in);
+        ArrayList <Account> database = new ArrayList<Account>();
+        AccountDatabase accountDatabase= new AccountDatabase();
 
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
-     */
-    public int sampleMethod(int y)
-    {
-        // put your code here
-        return x + y;
+        boolean user = true;
+        String userInput = keyboard.nextLine();
+        final String VIEW_ACCOUNT = "view";
+        if(userInput.equals(VIEW_ACCOUNT)){
+            accountDatabase.displayAll("accounts");
+        }
+    }
+        public void getBalance(String filename){
+        //System.out.println(accountDatabase[1].getaccountBalance());
     }
 }

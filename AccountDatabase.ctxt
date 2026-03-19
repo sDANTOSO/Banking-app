@@ -1,10 +1,9 @@
 #BlueJ class context
 comment0.target=AccountDatabase
-comment0.text=\r\n\ create\ a\ load\ from\ file\ \r\naccount\ creator\r\nclose\ an\ account\r\n\ @Santoso\ Winatan\r\n\ @19/03/26\r\n
-comment1.params=
-comment1.target=AccountDatabase()
-comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ AccountDatabase\r\n
-comment2.params=y
-comment2.target=int\ sampleMethod(int)
-comment2.text=\r\n\ An\ example\ of\ a\ method\ -\ replace\ this\ comment\ with\ your\ own\r\n\r\n\ @param\ \ y\ \ a\ sample\ parameter\ for\ a\ method\r\n\ @return\ \ \ \ the\ sum\ of\ x\ and\ y\r\n
-numComments=3
+comment1.params=filename
+comment1.target=void\ saveToFile(java.lang.String)
+comment2.params=filename
+comment2.target=void\ loadFromFile(java.lang.String)
+comment3.params=filename
+comment3.target=void\ displayAll(java.lang.String)
+numComments=4
