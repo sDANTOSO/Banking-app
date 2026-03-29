@@ -54,9 +54,9 @@ public class AccountDatabase
                 String[] AccountDetails = line.split(";");
                 accountDatabase.add(new Account(AccountDetails[0],
                                             AccountDetails[1],
-                                            AccountDetails[3],
-                                            AccountDetails[4].toUpperCase(),
-                                            Float.parseFloat(AccountDetails[5])));
+                                            AccountDetails[2],
+                                            AccountDetails[3].toUpperCase(),
+                                            Float.parseFloat(AccountDetails[4])));
                 
             }
         }catch(IOException e){
@@ -64,10 +64,20 @@ public class AccountDatabase
         }
     }
     
-    public void displayAll(String filename){
-        System.out.println(accountDatabase.get(0).getcustomerName());
-    }
+    public void getAccountBalance(String filename,String customername){
+        for (Account thisAccount: this.accountDatabase ){
+            if (thisAccount.getcustomerName().equals(customername )){
+                System.out.println(thisAccount.getaccountBalance());
+            }
+        }
+        }
     
-    
+    public void setAccountBalance(String filename,String customername,float amount){
+        for (Account thisAccount: this.accountDatabase ){
+            if (thisAccount.getcustomerName().equals(customername )){
+                thisAccount.setaccountBalance(amount);
+            }
+        }
+        }
 
 }
