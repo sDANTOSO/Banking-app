@@ -22,8 +22,6 @@ public class AccountDatabase
     private List<Account> accountDatabase = new ArrayList <Account>();
     
     
-     
-    
     public void saveToFile(String filename){
         List<String> accountDetails= new ArrayList<String>();
         filename = "accounts";
