@@ -19,7 +19,6 @@ public class MainSystem
     ReliableInput reliableInput= new ReliableInput();
     String account = "accounts";
 
-    
     public MainSystem()
     {
         Scanner keyboard = new Scanner (System.in);
@@ -41,9 +40,9 @@ public class MainSystem
         System.out.println("quit - to end day");
 
         String userInput = keyboard.nextLine();
-        
+
         if(userInput.equals(VIEW_ACCOUNT)){
-            
+
             String userAccountNameInput = keyboard.nextLine();
             accountDatabase.getAccountBalance("accounts",userAccountNameInput);
         }
@@ -54,22 +53,27 @@ public class MainSystem
             String accountChangeType = keyboard.nextLine();// make to lowercase in string checker
             if(accountChangeType.equals(ACCOUNT_DEPOSIT)){
                 System.out.println("Please enter the amount to be deposited");
-                String accountChangeAmount = keyboard.nextLine();
-                
-                newBalance=reliableInput.readNum(accountChangeAmount);
-                accountDatabase.setAccountBalance("accounts",userAccountNameInput,newBalance);
+                //String accountChangeAmount = keyboard.nextLine();
+                boolean rightAmount=false;
+                while (rightAmount==false){
+                newBalance=reliableInput.readNum();
+
+                if  (newBalance<5000){
+                    accountDatabase.setAccountBalance("accounts",userAccountNameInput,newBalance);
+                    rightAmount=true;
+                }else{
+                     System.out.println("Deposits should not exceeed 5000");
+                }
+            }
             }else if(accountChangeType.equals(ACCOUNT_WITHDRAWAL)){
                 System.out.println("Please enter the amount to be withdrawn");
                 String accountChangeAmount = keyboard.nextLine();
-                newBalance=reliableInput.readNum(accountChangeAmount);
+                newBalance=reliableInput.readNum();
                 accountDatabase.setAccountBalance("accounts",userAccountNameInput,newBalance);
-            } 
-            
-            
+            }
+
         }
-
     }
-
     public void getBalance(String filename){
         Scanner keyboard = new Scanner (System.in);
         ArrayList <Account> database = new ArrayList<Account>();

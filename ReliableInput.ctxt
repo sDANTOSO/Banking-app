@@ -1,5 +1,5 @@
 #BlueJ class context
 comment0.target=ReliableInput
-comment1.params=prompt
-comment1.target=java.lang.Float\ readNum(java.lang.String)
+comment1.params=
+comment1.target=java.lang.Float\ readNum()
 numComments=2

@@ -8,10 +8,10 @@
 import java.util.Scanner;
 public class ReliableInput
 {
-    public Float readNum (String prompt){
+    public Float readNum (/*String prompt*/){
 
         Scanner keyboard=new Scanner(System.in);
-        System.out.println(prompt);
+        //System.out.println(prompt);
         while (!keyboard.hasNextFloat()){
             keyboard.nextLine();
             System.out.println("That is not an int");
