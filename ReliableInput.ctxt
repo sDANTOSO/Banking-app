@@ -2,10 +2,11 @@
 comment0.target=ReliableInput
 comment1.params=negativeAllowed
 comment1.target=java.lang.Float\ readNum(boolean)
-comment1.text=\r\n\ This\ makes\ sure\ a\ float\ is\ returned\r\n
+comment1.text=\r\n\ This\ makes\ sure\ a\ float\ is\ returned\ and\ checks\ whether\ it\ is\ negative.\r\n
 comment2.params=
 comment2.target=java.lang.String\ readAccountNum()
 comment2.text=\r\n\ This\ makes\ sure\ a\ properly\ formatted\ account\ number\ is\ returned\r\n
 comment3.params=
 comment3.target=AccountType\ readAccountType()
+comment3.text=\r\n\ This\ gets\ a\ string\ and\ returns\ an\ enum\ value\ of\ AccountType.\r\n
 numComments=4

@@ -1,16 +1,11 @@
 
 /**from here the user should be able to do these thing or call functions that do these things
- * *account creator (addAccount)
- *close an account (closeAccount)
- *get balance of an account (getBalance)
- *set account balance (setBalance)
- *end of day print
- *print total amount of money in bank
- *print net withdrawals and deposits (overall change over day)
+ * create an account
+ *close an account
+ *get balance of an account
+ *set account balance
+ *end of day printing and saving
  *
- *to do add end of day
- *finsih up deleting account
- *check account type when checking account changes
  * @Santoso Winatan
  * @20/03/26
  */
@@ -22,25 +17,19 @@ public class MainSystem
     ArrayList <Account> database = new ArrayList<Account>();
     AccountDatabase accountDatabase= new AccountDatabase();
     ReliableInput reliableInput= new ReliableInput();
-    String account = "accounts";
+    //String account = "accounts";
     /**
      * This checks what the customer wants to do then calls the right function
      */
-
     public MainSystem()
     {
         Scanner keyboard = new Scanner (System.in);
-        accountDatabase.loadFromFile("accounts");
+        accountDatabase.loadFromFile();
         boolean user = false;
         float dailyChangeAmount=0;
         final String CREATE_ACCOUNT = "CREATE";
         final String END_DAY = "QUIT";
         
-        //System.out.println(accountDatabase);
-
-        //accountDatabase.getAccountBalance(account,"Christopher Wallace");
-        //System.out.println(accountDatabase.getAccountBalance(account,"Christopher Wallace"));  
-        //accountDatabase.getAccountName(account,"Christopher Wallace");
         while (user==false){
             System.out.println("view - to view account");
             System.out.println("set - to change account balance");
@@ -50,17 +39,17 @@ public class MainSystem
             String userInput = keyboard.nextLine();
             userInput = userInput.toUpperCase();
             String[] changeTypes={"VIEW","SET","CREATE","DELETE","QUIT"};
-            //for (ChangeType type: ChangeType.values()){
+            
             for (int i =0; i<changeTypes.length; i++){
-                //System.out.println(type); 
                 if (userInput.equals(changeTypes[i])){
                     if (userInput.equals(CREATE_ACCOUNT)){
-                        createAccount(account,userInput);
-                    }else if(userInput.equals(END_DAY)){
-                        endDay(account,dailyChangeAmount);
+                        createAccount(userInput);
+                    }
+                    else if(userInput.equals(END_DAY)){
+                        endDay(dailyChangeAmount);
                     }
                     else{
-                        dailyChangeAmount=editAccount(account,userInput);
+                        dailyChangeAmount=dailyChangeAmount+editAccount(userInput);
                     }                   
                 }                
             }
@@ -69,219 +58,169 @@ public class MainSystem
 
     /**
      * This handles anything that is manipulating an account
-     * this is
+     * this is:
      * viewing accounts, setting accounts balances, deleting accounts and 
-     * maybe viewing and dditing could be moved if this method gets to big 
      */
-    public float editAccount(String filename, String userInput){
+    public float editAccount( String userInput){
         Scanner keyboard = new Scanner (System.in);
-        //ArrayList <Account> database = new ArrayList<Account>();
-        //AccountDatabase accountDatabase= new AccountDatabase();
 
-        float changeAmount;
-        float dailyChangeAmount=0;
+        float changeAmount;// This is the value of change that the user wants to enact on an account balance
+        float dailyChangeAmount=0; // This is the overall daily change amount it is passed to the main at the end of each time this function is called
 
         final String VIEW_ACCOUNT = "VIEW";
         final String SET_ACCOUNT = "SET";
         final String ACCOUNT_DEPOSIT = "deposit";
         final String ACCOUNT_WITHDRAWAL = "withdrawal";
-        final String DELETE_ACCOUNT = "DELETE";// turn into enums!!
-        //
+        final String DELETE_ACCOUNT = "DELETE";
+        final int MAX_DEPOSIT=5000; // Maximum deposit amount for savings and everyday accounts.
+        final int MINIMUMACCOUNTBALANCE=0; // Minimum account balance for savings and everyday accounts.
+        final int MAX_OVERDRAFT=-1000; // The maximum amount of debt a current account can go into. 
 
-        // order of operations 
-        // view account,set account, delete account all need a specific customer id 
-        // run specific customer id program
-        // then run view if the task was to view, delete if the task was to delete
-        // then run deposit withdrawal 
-        // if end day call end day function and pass them net deposit and withdrawals
-        // end day function must 
-        /* At the end of each day the program should print a summary of the total cash in the bank’s digital system, 
-         * and the net deposits/withdrawals for the day, 
-         * then save the banking data to a .txt file.
-         */
+        String userAccountNameInput=null; // This is the users name on the account
+        String userAccountNum=null; // This is the users account number
 
-        String userAccountNameInput="nothing";
-        String userAccountNum="nothing";
-
-        boolean accountChoice= false;
-        boolean nameIdentifier=true;
+        boolean accountChoice= false; // This signals to the while loop when an account identifier has been inputted by the user
+        boolean nameIdentifier=true; // If the account is identified by name then true. If identified by account number then false.
+        
         while (accountChoice==false){
             System.out.println("Please enter the customers name as listed on the account");
             userAccountNameInput = keyboard.nextLine();
 
-            int result = (accountDatabase.getAccountName(account,userAccountNameInput));// checks if there is name and if there are multiple
+            int result = (accountDatabase.getAccountName(userAccountNameInput));// checks if there is a match beetween input and names in the database and if there are multiple
 
-            /*if (result==0){
-            accountChoice=false;
-            }else */
             if (result==1){
                 accountChoice=true;
             }else if (result>1) {
-                // call account number check then print out balance of account number
                 userAccountNum=reliableInput.readAccountNum();
                 accountChoice=true;
                 nameIdentifier=false;
             }
-
-        }
+            /*Because there might be two people with the same name there needs to be something else to identify so the program doesnt only show the first instance of that name
+              so the account number will be the unique identifier in this situation*/
+        }// Finds a way to define the singular account the user wants.
 
         if(userInput.equals(VIEW_ACCOUNT)){
             if (nameIdentifier==true){
-                accountDatabase.getAccountBalance(account,userAccountNameInput);
+                accountDatabase.getAccountBalance(userAccountNameInput);
             }else if (nameIdentifier==false){
-                accountDatabase.getAccountBalance(account,userAccountNum);            
+                accountDatabase.getAccountBalance(userAccountNum);            
             }
-        }
+        }// Calls method that prints account balance.
 
         if(userInput.equals(DELETE_ACCOUNT)){
             if (nameIdentifier==true){
-                accountDatabase.deleteAccount(account,userAccountNameInput);
-                //accountDatabase.saveToFile(account);
+                accountDatabase.deleteAccount(userAccountNameInput);
             }else if (nameIdentifier==false){
-                accountDatabase.deleteAccount(account,userAccountNum);            
+                accountDatabase.deleteAccount(userAccountNum);            
             }
-        }
+        }// Calls method that deletes account.
 
         if(userInput.equals(SET_ACCOUNT)){
-            //System.out.println("Please enter the account name ");
-            //userAccountNameInput = keyboard.nextLine();// run check to see if is a customer name
-
-            System.out.println("Please enter deposit or withdrawal");
-            String accountChangeType = keyboard.nextLine();// make to lowercase in string checker
             boolean rightAmount=false;
             final boolean negativeAllowed=false;
+            
+            System.out.println("Please enter deposit or withdrawal");
+            String accountChangeType = keyboard.nextLine();
+           
             if(accountChangeType.equals(ACCOUNT_DEPOSIT)){
                 System.out.println("Please enter the amount to be deposited");
-                //String accountChangeAmount = keyboard.nextLine();
 
                 while (rightAmount==false){
                     changeAmount=reliableInput.readNum(negativeAllowed);
 
-                    if  (changeAmount<5000){
-                        accountDatabase.setAccountBalance("accounts",userAccountNameInput,changeAmount,ACCOUNT_DEPOSIT);
+                    if  (changeAmount<MAX_DEPOSIT){
+                        accountDatabase.setAccountBalance(userAccountNameInput,changeAmount,ACCOUNT_DEPOSIT);
                         dailyChangeAmount=dailyChangeAmount+changeAmount;
                         rightAmount=true;
-                    }else{
-                        System.out.println("Deposits should not exceeed 5000");
                     }
+                    else{
+                        System.out.println("Deposits should not exceeed 5000");
+                    }// Calls method that sets account and makes sure that transactions are within the banks parameters.
                 }
             }else if(accountChangeType.equals(ACCOUNT_WITHDRAWAL)){
-
                 while (rightAmount==false){
                     System.out.println("Please enter the amount to be withdrawn");
-                    changeAmount=reliableInput.readNum(negativeAllowed);// withdraw the amount not set it as that amount  
+                    changeAmount=reliableInput.readNum(negativeAllowed);
 
-                    if(accountDatabase.getAccountType(account,userAccountNameInput)==false){
-
-                        if(accountDatabase.getAccountBalance(account,userAccountNameInput)-changeAmount<0){
+                    if(accountDatabase.getAccountType(userAccountNameInput)==false){
+                        if(accountDatabase.getAccountBalance(userAccountNameInput)-changeAmount<MINIMUMACCOUNTBALANCE){
                             System.out.println("Savings and Everyday accounts cannot go into debt");  
-                        }else{
-                            accountDatabase.setAccountBalance("accounts",userAccountNameInput,changeAmount,ACCOUNT_WITHDRAWAL);
+                        }
+                        else{
+                            accountDatabase.setAccountBalance(userAccountNameInput,changeAmount,ACCOUNT_WITHDRAWAL);
                             dailyChangeAmount=dailyChangeAmount-changeAmount;
                             rightAmount=true;
-                        }
+                        }// Makes sure that savings and everyday accounts don't go into debt
                     }
-                    else if(accountDatabase.getAccountType(account,userAccountNameInput) ==true){
-                        if (accountDatabase.getAccountBalance(account,userAccountNameInput)-changeAmount<-1000){
-                            //String accountChangeAmount = keyboard.nextLine();
+                    else if(accountDatabase.getAccountType(userAccountNameInput) ==true){
+                        if (accountDatabase.getAccountBalance(userAccountNameInput)-changeAmount<MAX_OVERDRAFT){
                             System.out.println("Accounts can't exceed $1000 debt");                    
-                        }else{
-                            accountDatabase.setAccountBalance("accounts",userAccountNameInput,changeAmount,ACCOUNT_WITHDRAWAL);
+                        }
+                        else{
+                            accountDatabase.setAccountBalance(userAccountNameInput,changeAmount,ACCOUNT_WITHDRAWAL);
                             dailyChangeAmount=dailyChangeAmount-changeAmount;
                             rightAmount=true;
                         }
-                    }
+                    }//Makes sure that current accounts dont go lower then -1000;
                 }
             }
-
         }
-        //boolean user = true;
-        //String userInput = keyboard.nextLine();
-        //final String VIEW_ACCOUNT = "view";
-        //if(userInput.equals(VIEW_ACCOUNT)){
-        //accountDatabase.displayAll("accounts");
-        //}
-
-        // view accounts 
-        /*
-        close an account needs
-        checking account name if multiple or single
-        then account number
-        get the balance 
-        needs checking account name if multiple or single 
-        then account number
-        deposit/withdraw needs
-        checking account name if multiple or single
-        then account number
-        then checking whether the deposit or withdrawal is withing parameters
-
-         */
-            return dailyChangeAmount;
+    
+        return dailyChangeAmount;
     }
 
     /**
-     * This handles creating an account
-     * which involves
-     * setting
-     * Customer name
-    Account number
-    Customer address
-    Account type
-    Current balance
-
+     * This handles creating an account which involves setting the customer name, account number,customer adress, account type and the current balance
      */
-    public void createAccount(String filename, String changeType){
-
+    public void createAccount( String changeType){
         Scanner keyboard = new Scanner (System.in);
-        /*create an account needs 
-         * if there is an account number already like that checking
-         * greater then -1000 checking */
-        String customerName;
+        
         boolean inputCorrect=false;
+        final boolean NEGATIVE_ALLOWED=true;
+        final boolean NEGATIVE_NOT_ALLOWED=false;
         final AccountType EVERYDAY=AccountType.EVERYDAY;
         final AccountType SAVINGS=AccountType.SAVINGS;
         final AccountType CURRENT=AccountType.CURRENT;
-        //customerName, String accountNumber, String customerAdress, AccountType accountType,float accountBalance
-        System.out.println("Please enter the customers name to be listed on the account");
-        customerName = keyboard.nextLine();
         
-        String accountNumber =reliableInput.readAccountNum();
+        // Gets customer name
+        System.out.println("Please enter the customers name to be listed on the account");
+        String customerName = keyboard.nextLine();
+        // Gets a unique account number
+        String accountNumber =reliableInput.readAccountNum();//check if its the same number as one that already exists
+        // Gets customer adress
         System.out.println("Please enter the address to be listed on the account");
         String customerAdress=keyboard.nextLine();
+        // Gets account type
+        AccountType accountType=reliableInput.readAccountType();
         
-        AccountType accountType=reliableInput.readAccountType();// make reliable input?
         float accountBalance=0;
 
         while(inputCorrect==false){
+            System.out.println("Please enter the account balance");
             if (accountType==EVERYDAY||accountType==SAVINGS){
-                accountBalance=reliableInput.readNum(false);
+                accountBalance=reliableInput.readNum(NEGATIVE_NOT_ALLOWED);
                 inputCorrect=true;
             }else if (accountType==CURRENT){
-                accountBalance=reliableInput.readNum(false);
-
+                accountBalance=reliableInput.readNum(NEGATIVE_ALLOWED);
                 if (accountBalance>-1000){
-                    accountBalance=reliableInput.readNum(false);
+                    inputCorrect=true;
                 }
-
             }
+        }// Makes sure the account balances that are being set don't break the rules for accounts.
 
-        }
-
-        accountDatabase.createAccount(customerName,accountNumber,customerAdress,accountType,accountBalance);
-        accountDatabase.saveToFile("accounts");
+        accountDatabase.createAccount(customerName,accountNumber,customerAdress,accountType,accountBalance);// creates the object
+        System.out.println("The account has been created");
     }
 
-    public void endDay(String filename, float netCashflow ){
-        // print total amount in bank by looping through array
-        //print net cashflow value
-        // call save file function
-        float  totalBalance=accountDatabase.getTotalBalance(account);
+    /**
+     * This gets the total balance of the bank,net deposits/withdrawals prints them then saves and exits the program.
+     */    
+    public void endDay( float netCashflow ){
+        float  totalBalance=accountDatabase.getTotalBalance();
 
-        System.out.println("The banks total balance is: $"+ totalBalance);
-        System.out.println("The net deposits/withdrawals is: $"+ netCashflow);
-        accountDatabase.saveToFile(account);
-        System.exit(0);
+        System.out.println("The banks total balance is: $"+ totalBalance);// prints the total amount of money held by all accounts in the banks database
+        System.out.println("The net deposits/withdrawals is: $"+ netCashflow);// prints the overall net deposits/withdrawals of the day
+        accountDatabase.saveToFile(); // saves the file to an actual file
+        System.exit(0);// ends the program 
     }
-
 }
-

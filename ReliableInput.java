@@ -1,6 +1,6 @@
 
 /**
- * create reliable input ofr stirngs and ints that can be called from main
+ * create reliable input of stirngs and ints that can be called from main
  *
  * @Santoso Winatan
  * @version (a version number or a date)
@@ -15,13 +15,14 @@ public class ReliableInput
     ArrayList <Account> database = new ArrayList<Account>();
     AccountDatabase accountDatabase= new AccountDatabase();
     /**
-     * This makes sure a float is returned
+     * This makes sure a float is returned and checks whether it is negative.
      */
     public Float readNum (boolean negativeAllowed){
+        Scanner keyboard=new Scanner(System.in);
+
         boolean correctInput=false;
         float amount=0;
-        Scanner keyboard=new Scanner(System.in);
-        //System.out.println(prompt);
+
         while( correctInput==false){
             while (!keyboard.hasNextFloat()){
                 keyboard.nextLine();
@@ -47,6 +48,7 @@ public class ReliableInput
     public String readAccountNum (){
         Scanner keyboard=new Scanner(System.in);
 
+        boolean accountUnique=true; 
         boolean correctFormat=false;
         char hyphen='-';
 
@@ -60,42 +62,47 @@ public class ReliableInput
 
             if (arr.length==18){                
                 for (int i =0; i< 18; i++){
-                    if (i==2||i==7||i==15){
-                        if (arr[i]==hyphen){                            
-                            rightCounter++;
-                        }
+                    if (i==2||i==7||i==15 && arr[i]==hyphen){//turn into finals                     
+                        rightCounter++;
                     }
-                    if (i==0||i==1||i==3||i==4||i==5||i==6||i==8||i==9||i==10||i==11||i==12||i==13||i==14||i==16||i==17){ 
-                        if (Character.isDigit(arr[i])== true){
-                            rightCounter++;
-                        }
+                    else if (i==0||i==1||i==3||i==4||i==5||i==6||i==8||i==9||i==10||i==11||i==12||i==13||i==14||i==16||i==17 && Character.isDigit(arr[i])== true){ 
+                        rightCounter++;
                     }
                 }
             }else{
                 System.out.println("That is an incorrect length" );
             }
-            //System.out.println(rightCounter );
-            if ((rightCounter)==18){
+
+            for (Account thisAccount: this.database ){
+                if (thisAccount.getaccountNumber().equals(userInput)){
+                    accountUnique=false;
+                    System.out.println("That number is not unique" );
+                }
+                System.out.println("That number is not unique" );
+            }
+
+            if ((rightCounter)==18&& accountUnique==true){
                 correctFormat=true;
             }else{
                 System.out.println("That format is incorrect");
             }
         }
-        //loop through two arrays one array is just looping through the length of the user input.length 
-        // the other loop is an array that tells us what to test for at each point in the arrray
-        // for this to work both arrays have to be the same 'length' 
+
         return userInput;
     }
 
+    /**
+     * This gets a string and returns an enum value of AccountType.
+     */
     public AccountType readAccountType (){
         Scanner keyboard=new Scanner(System.in);
         boolean correctFormat =false;
         AccountType accountType=null;
-         System.out.println("Please enter an account type of either 1: Everyday 2: Savings 3: Current");
+        System.out.println("Please enter an account type of either 1: Everyday 2: Savings 3: Current");
         while (correctFormat==false){    
             String userInput = keyboard.nextLine();
             userInput=userInput.toUpperCase();
-            System.out.println(userInput);
+
             switch(userInput) {
                 case "EVERYDAY":
                     accountType = AccountType.EVERYDAY;
@@ -109,10 +116,10 @@ public class ReliableInput
                     accountType = AccountType.CURRENT;
                     correctFormat =true;
                     break; 
-            }
-            
+            }            
         }
-        System.out.println(accountType);
+
+        System.out.println("Account type is: "+ accountType);
         return (accountType);
     }
 }

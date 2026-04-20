@@ -19,16 +19,15 @@ import java.io.FileWriter;
 
 public class AccountDatabase
 {
-    // instance variables - replace the example below with your own
     private List<Account> accountDatabase = new ArrayList <Account>();
 
     /**
      * This saves the current accounts data to a file
      */
-    public void saveToFile(String filename){
+    public void saveToFile(){
         List<String> accountDetails= new ArrayList<String>();
-        filename = "accounts";
-        File myFile=new File (filename+".txt");
+        //filename = "accounts";
+        File myFile=new File ("accounts.txt");
         try{
             FileWriter myWriter = new FileWriter(myFile);
 
@@ -46,20 +45,20 @@ public class AccountDatabase
     /**
      * This loads the current accounts data to a file
      */
-    public void loadFromFile(String filename){
+    public void loadFromFile(){
         try{
-            filename = "accounts";
-            File myFile=new File (filename+".txt");
+            
+            File myFile=new File ("accounts.txt");
             Scanner myReader = new Scanner(myFile);    
 
             while (myReader.hasNextLine()){
                 String line = myReader.nextLine();
                 String[] accountDetails = line.split(";");
-                //System.out.println(accountDetails.length);
+
                 accountDatabase.add(new Account(accountDetails[0],
                         accountDetails[1],
                         accountDetails[2],
-                        AccountType.valueOf(accountDetails[3].toUpperCase()),//Day.valueOf(input.toUpperCase())
+                        AccountType.valueOf(accountDetails[3].toUpperCase()),
                         Float.parseFloat(accountDetails[4])));
 
             }
@@ -68,15 +67,38 @@ public class AccountDatabase
         }
     }
 
+    /**
+     * This creates an account by passing all the data to the constructor
+     */
     public void createAccount(String customerName, String accountNumber, String customerAdress, AccountType accountType,float accountBalance){
         accountDatabase.add(new Account(customerName,
                 accountNumber,
                 customerAdress,
-                accountType,//Day.valueOf(input.toUpperCase())
+                accountType,
                 accountBalance ));        
     }
-
-    public int getAccountName(String filename,String customername){
+    
+    /**
+     * This deletes an account by deleting it from the database.
+     */
+    public void deleteAccount( String customerID){
+        Account deletedAccount=null;
+        for (Account thisAccount: this.accountDatabase ){
+            if (thisAccount.getcustomerName().equals(customerID)){
+                deletedAccount=thisAccount;
+            }
+            if (thisAccount.getaccountNumber().equals(customerID)){
+                deletedAccount=thisAccount;
+            }
+        }
+        
+        accountDatabase.remove(accountDatabase.indexOf(deletedAccount));
+    }
+    
+    /**
+     * This matches a name to an account and checks the amount of names that are matched.
+     */
+    public int getAccountName(String customername){
         int counter =0;
         Account userAccount=null;
         for (Account thisAccount: this.accountDatabase ){
@@ -96,9 +118,9 @@ public class AccountDatabase
     }
 
     /**
-     * This gets a customers balance// with account name or number
+     * This gets a customers balance with account name or number.
      */
-    public float getAccountBalance(String filename,String customerID){
+    public float getAccountBalance(String customerID){
         float currentBalance=0;
         for (Account thisAccount: this.accountDatabase ){
             if (thisAccount.getcustomerName().equals(customerID)){
@@ -110,10 +132,14 @@ public class AccountDatabase
                 System.out.println("Your current balance is:"+thisAccount.getaccountBalance());
             }
         }
+        
         return currentBalance;
     }
 
-    public float getTotalBalance(String filename){
+    /**
+     * This gets the total balance of all the accounts in the database added together.
+     */
+    public float getTotalBalance(){
         float  totalBalance=0;
 
         for (Account thisAccount: this.accountDatabase ){
@@ -122,8 +148,11 @@ public class AccountDatabase
 
         return totalBalance;
     }
-
-    public boolean getAccountType(String filename,String customerID){
+    
+    /**
+     * This gets the account type and checks if that type of account has an overdraft.
+     */
+    public boolean getAccountType(String customerID){
         boolean overdraft =true;
         final AccountType EVERYDAY=AccountType.EVERYDAY;
         final AccountType SAVINGS=AccountType.SAVINGS;
@@ -133,67 +162,36 @@ public class AccountDatabase
             if (thisAccount.getcustomerName().equals(customerID)){
                 if (thisAccount.getaccountType()==EVERYDAY||thisAccount.getaccountType()==SAVINGS){
                     overdraft=false;
-                }else if(thisAccount.getaccountType()==CURRENT){
+                }
+                else if(thisAccount.getaccountType()==CURRENT){
                     overdraft=true;
                 }
             }
             else if (thisAccount.getaccountNumber().equals(customerID)){
                 if (thisAccount.getaccountType()==EVERYDAY||thisAccount.getaccountType()==SAVINGS){
                     overdraft=false;
-                    //System.out.println("Your current balance is:"+thisAccount.getaccountBalance());
-                }else if(thisAccount.getaccountType()==CURRENT){
+                }
+                else if(thisAccount.getaccountType()==CURRENT){
                     overdraft=true;
                 }
             }
         }
-        System.out.println(overdraft);
+        
         return overdraft;
     }
 
-    public void deleteAccount(String filename, String customerID){
-        Account deletedAccount=null;
-        for (Account thisAccount: this.accountDatabase ){
-            if (thisAccount.getcustomerName().equals(customerID)){// get rid of half of if statements
-                deletedAccount=thisAccount;
-                //System.out.println(accountDatabase.indexOf(thisAccount));
-                //accountDatabase.remove(accountDatabase.indexOf(thisAccount));
-                //System.out.println("Your new balance is:"+thisAccount.getaccountBalance());
-            }
-            if (thisAccount.getaccountNumber().equals(customerID)){
-                deletedAccount=thisAccount;
-                //thisAccount.setaccountBalance((thisAccount.getaccountBalance())-amount);
-                //System.out.println("Your new balance is:"+thisAccount.getaccountBalance());
-            }
-        }
-        accountDatabase.remove(accountDatabase.indexOf(deletedAccount));
-
-    }
-
-    /*
-    public void getAccountBalance(String filename,String accountNumber){
-    System.out.println("fuk"+ accountNumber);
-    for (Account thisAccount: this.accountDatabase ){
-    System.out.println(thisAccount.getaccountNumber());
-    if (thisAccount.getaccountNumber().equals(accountNumber )){
-
-    System.out.println(thisAccount.getaccountBalance());
-    }
-    }
-    }
-
     /**
-     * This sets a customers balance
+     * This adds the deposit or withdraws money from the account.
      */
-    public void setAccountBalance(String filename,String customerID,float amount, String changeType){
+    public void setAccountBalance(String customerID,float amount, String changeType){
         for (Account thisAccount: this.accountDatabase ){
-
             if (changeType.equals("deposit")){            
                 if (thisAccount.getcustomerName().equals(customerID)){
                     thisAccount.setaccountBalance((thisAccount.getaccountBalance())+amount);
                     System.out.println("Your new balance is:"+thisAccount.getaccountBalance());
                 }
                 if (thisAccount.getaccountNumber().equals(customerID)){
-                    thisAccount.setaccountBalance((thisAccount.getaccountBalance())-amount);
+                    thisAccount.setaccountBalance((thisAccount.getaccountBalance())+amount);
                     System.out.println("Your new balance is:"+thisAccount.getaccountBalance());
                 }
             }else if (changeType.equals("withdrawal")){
@@ -208,5 +206,4 @@ public class AccountDatabase
             }
         }
     }
-
 }

@@ -8,44 +8,21 @@
 
 public class Account
 {
-
     private String customerName;
-    private String accountNumber;// how to hyphenate or should i concatenate c
-    //create error prevention system
+    private String accountNumber;
     private String customerAdress;
     private AccountType accountType;
     private float accountBalance;  
-    //@Override
-    //public String toString() {
-        //return "[" + customerName + "; " + accountNumber+ "; " + customerAdress + "; "+ accountType + "; "+ accountBalance + "]" ;
-   // }
 
     /**
      * This is a constructor that sets the values of the accounts
-     *
      */
-    public Account(String customerName, String accountNumber, String customerAdress, AccountType accountType,float accountBalance){
-        //final 
+    public Account(String customerName, String accountNumber, String customerAdress, AccountType accountType,float accountBalance){ 
         this.customerName=customerName;
         this.accountNumber=accountNumber;
         this.customerAdress=customerAdress;
         this.accountType=accountType;
         this.accountBalance=accountBalance;
-        
-        
-        /*
-        switch(accountType) {
-            case "EVERYDAY":
-                this.accountType= EVERYDAY;
-                break;
-            case "SAVINGS":
-                accountType= "SAVINGS";
-                break;
-            case "CURRENT":
-                accountType= "CURRENT";
-                break;                
-        }
-        */
     }
 
     /**
