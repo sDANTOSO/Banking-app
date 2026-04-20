@@ -19,7 +19,10 @@ public class ReliableInput
      */
     public Float readNum (boolean negativeAllowed){
         Scanner keyboard=new Scanner(System.in);
-
+        
+        final float MINIMUM_ACCOUNTBALANCE= 0;
+        final boolean NEGATIVE_ALLOWED=true;
+        final boolean NEGATIVE_NOT_ALLOWED=false;
         boolean correctInput=false;
         float amount=0;
 
@@ -30,9 +33,9 @@ public class ReliableInput
 
             }
             amount=keyboard.nextFloat();
-            if (negativeAllowed == false && amount>0){
+            if (negativeAllowed == NEGATIVE_NOT_ALLOWED && amount>=MINIMUM_ACCOUNTBALANCE){
                 correctInput=true;
-            }else if (negativeAllowed == true){
+            }else if (negativeAllowed == NEGATIVE_ALLOWED){
                 correctInput=true;
             }else{
                 System.out.println("The float has to be positive");

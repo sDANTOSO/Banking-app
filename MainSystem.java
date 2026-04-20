@@ -17,7 +17,7 @@ public class MainSystem
     ArrayList <Account> database = new ArrayList<Account>();
     AccountDatabase accountDatabase= new AccountDatabase();
     ReliableInput reliableInput= new ReliableInput();
-    //String account = "accounts";
+    
     /**
      * This checks what the customer wants to do then calls the right function
      */
@@ -128,7 +128,7 @@ public class MainSystem
                 while (rightAmount==false){
                     changeAmount=reliableInput.readNum(negativeAllowed);
 
-                    if  (changeAmount<MAX_DEPOSIT){
+                    if  (changeAmount<=MAX_DEPOSIT){
                         accountDatabase.setAccountBalance(userAccountNameInput,changeAmount,ACCOUNT_DEPOSIT);
                         dailyChangeAmount=dailyChangeAmount+changeAmount;
                         rightAmount=true;
@@ -153,13 +153,13 @@ public class MainSystem
                         }// Makes sure that savings and everyday accounts don't go into debt
                     }
                     else if(accountDatabase.getAccountType(userAccountNameInput) ==true){
-                        if (accountDatabase.getAccountBalance(userAccountNameInput)-changeAmount<MAX_OVERDRAFT){
-                            System.out.println("Accounts can't exceed $1000 debt");                    
-                        }
-                        else{
+                        if (accountDatabase.getAccountBalance(userAccountNameInput)-changeAmount>=MAX_OVERDRAFT){
                             accountDatabase.setAccountBalance(userAccountNameInput,changeAmount,ACCOUNT_WITHDRAWAL);
                             dailyChangeAmount=dailyChangeAmount-changeAmount;
-                            rightAmount=true;
+                            rightAmount=true;                  
+                        }
+                        else{                           
+                            System.out.println("Accounts can't exceed $1000 debt");   
                         }
                     }//Makes sure that current accounts dont go lower then -1000;
                 }
@@ -176,6 +176,7 @@ public class MainSystem
         Scanner keyboard = new Scanner (System.in);
         
         boolean inputCorrect=false;
+        final float MINIMUM_ACCOUNTBALANCE= -1000;
         final boolean NEGATIVE_ALLOWED=true;
         final boolean NEGATIVE_NOT_ALLOWED=false;
         final AccountType EVERYDAY=AccountType.EVERYDAY;
@@ -202,7 +203,7 @@ public class MainSystem
                 inputCorrect=true;
             }else if (accountType==CURRENT){
                 accountBalance=reliableInput.readNum(NEGATIVE_ALLOWED);
-                if (accountBalance>-1000){
+                if (accountBalance>=MINIMUM_ACCOUNTBALANCE){
                     inputCorrect=true;
                 }
             }

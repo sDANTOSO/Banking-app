@@ -183,23 +183,25 @@ public class AccountDatabase
     /**
      * This adds the deposit or withdraws money from the account.
      */
-    public void setAccountBalance(String customerID,float amount, String changeType){
+    public void setAccountBalance(String customerID,float amount, String changeType, boolean nameIdentifier){
+        
+        
         for (Account thisAccount: this.accountDatabase ){
             if (changeType.equals("deposit")){            
-                if (thisAccount.getcustomerName().equals(customerID)){
+                if (thisAccount.getcustomerName().equals(customerID) && nameIdentifier==true){
                     thisAccount.setaccountBalance((thisAccount.getaccountBalance())+amount);
                     System.out.println("Your new balance is:"+thisAccount.getaccountBalance());
                 }
-                if (thisAccount.getaccountNumber().equals(customerID)){
+                else if (thisAccount.getaccountNumber().equals(customerID)&& nameIdentifier==false){
                     thisAccount.setaccountBalance((thisAccount.getaccountBalance())+amount);
                     System.out.println("Your new balance is:"+thisAccount.getaccountBalance());
                 }
             }else if (changeType.equals("withdrawal")){
-                if (thisAccount.getcustomerName().equals(customerID)){
+                if (thisAccount.getcustomerName().equals(customerID) && nameIdentifier==true){
                     thisAccount.setaccountBalance((thisAccount.getaccountBalance())-amount);
                     System.out.println("Your new balance is:"+thisAccount.getaccountBalance());
                 }
-                if (thisAccount.getaccountNumber().equals(customerID)){
+                else if (thisAccount.getaccountNumber().equals(customerID) && nameIdentifier==false){
                     thisAccount.setaccountBalance((thisAccount.getaccountBalance())-amount);
                     System.out.println("Your new balance is:"+thisAccount.getaccountBalance());
                 }
