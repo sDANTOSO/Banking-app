@@ -1,9 +1,8 @@
-
 /**
- * This is a constructor that will construct and edit peoples accounts
+ * This is a constructor that will construct and edit peoples accounts in a bank
  *
  * @Santoso Winatan
- * @19/03/26
+ * @21/04/26
  */
 
 public class Account
@@ -94,5 +93,4 @@ public class Account
     public float getaccountBalance(){
         return(this.accountBalance);
     }
-
 }

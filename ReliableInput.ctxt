@@ -2,7 +2,7 @@
 comment0.target=ReliableInput
 comment1.params=negativeAllowed
 comment1.target=java.lang.Float\ readNum(boolean)
-comment1.text=\r\n\ This\ makes\ sure\ a\ float\ is\ returned\ and\ checks\ whether\ it\ is\ negative.\r\n
+comment1.text=\r\n\ This\ makes\ sure\ a\ float\ is\ returned\ and\ that\ the\ float\ isn't\ negative\ if\ that\ is\ necessary\r\n
 comment2.params=
 comment2.target=java.lang.String\ readAccountNum()
 comment2.text=\r\n\ This\ makes\ sure\ a\ properly\ formatted\ account\ number\ is\ returned\r\n

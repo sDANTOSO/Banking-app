@@ -1,4 +1,4 @@
 #BlueJ class context
 comment0.target=AccountType
-comment0.text=\r\n\ This\ enum\ defines\ the\ different\ account\ types\ \r\n\ this\ makes\ it\ easier\ to\ know\ that\ they\ are\ the\ same\ account\ type\ as\ \r\n\ it\ will\ give\ an\ error\ if\ the\ do\ not\ match\ the\ three\ specific\ types\r\n\r\n\ @Santoso\ Winatan\r\n\ @19/03/26\r\n
+comment0.text=\r\n\ This\ enum\ defines\ the\ different\ account\ types,\ Everyday,\ Savings,\ and\ Current\r\n\ \r\n\ This\ makes\ it\ easy\ to\ add\ a\ new\ account\ type\ later\r\n\r\n\ @Santoso\ Winatan\r\n\ @21/04/26\r\n
 numComments=1
