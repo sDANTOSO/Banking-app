@@ -51,7 +51,6 @@ public class AccountDatabase
      */
     public void loadFromFile(){
         try{
-
             File myFile=new File ("accounts.txt"); // chooses file 
             Scanner myReader = new Scanner(myFile);    
 
@@ -155,6 +154,7 @@ public class AccountDatabase
         final boolean UNIQUE_NUMBER=true;
         
         boolean accountUnique=true;
+        
         for (Account thisAccount: this.accountDatabase){
             if (thisAccount.getaccountNumber().equals(customerID)){
                 accountUnique=false;

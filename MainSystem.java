@@ -129,21 +129,13 @@ public class MainSystem
             String accountChangeType = keyboard.nextLine();
 
             if(accountChangeType.equals(ACCOUNT_DEPOSIT)){
-                //while (rightAmount==NOT_MADE){
-                    System.out.println("Please enter the amount to be deposited");
-
-                    changeAmount=reliableInput.readNum(NEGATIVE_ALLOWED);
-
-                    //if  (changeAmount<=MAX_DEPOSIT){
-                        accountDatabase.setAccountBalance(customerID,changeAmount,ACCOUNT_DEPOSIT);
-                        dailyChangeAmount=dailyChangeAmount+changeAmount;
-                       // rightAmount=true;
-                    //} // Makes sure the deposit is not over the max
-                    //else{
-                       // System.out.println("Deposits should not exceeed 5000");
-                   // }// Calls method that sets account and makes sure that transactions are within the banks parameters.
+                System.out.println("Please enter the amount to be deposited");
                 
-
+                changeAmount=reliableInput.readNum(NEGATIVE_ALLOWED);
+                
+                accountDatabase.setAccountBalance(customerID,changeAmount,ACCOUNT_DEPOSIT);
+                dailyChangeAmount=dailyChangeAmount+changeAmount;
+                
             }else if(accountChangeType.equals(ACCOUNT_WITHDRAWAL)){
                 while (rightAmount==NOT_MADE){
                     System.out.println("Please enter the amount to be withdrawn");
@@ -174,8 +166,9 @@ public class MainSystem
                         }
                         else if( changeAmount>MAX_WITHDRAWAL){
                             System.out.println("Withdrawals should not exceeed 5000");
-                        }else                            
+                        }else {                           
                             System.out.println("Current accounts can't exceed $1000 debt");   
+                        }// Calls method that sets account and makes sure that transactions are within the banks parameters.
                     }//Makes sure that current accounts dont go lower then -1000;
                 }
             }
