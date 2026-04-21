@@ -107,8 +107,9 @@ public class ReliableInput
         boolean correctFormat =false;
         AccountType accountType=null;
         
-        System.out.println("Please enter an account type of either 1: Everyday 2: Savings 3: Current");
         while (correctFormat==NOT_FOUND){    
+            System.out.println("Please enter an account type of either 1: Everyday 2: Savings 3: Current");
+            
             String userInput = keyboard.nextLine();
             userInput=userInput.toUpperCase();
 
@@ -130,6 +131,6 @@ public class ReliableInput
         }
 
         System.out.println("Account type is: "+ accountType);
-        return (accountType);// Returns a valid account typer 
+        return accountType;// Returns a valid account typer 
     }
 }

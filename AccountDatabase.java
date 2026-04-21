@@ -125,7 +125,7 @@ public class AccountDatabase
             System.out.println("There are multiple accounts with that name please also enter account number");
         }
 
-        return (counter); // returns the amount of names that match in the database
+        return counter; // returns the amount of names that match in the database
     }
 
     /**
