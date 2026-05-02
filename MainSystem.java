@@ -5,7 +5,7 @@
  *Deposit to a account
  *Withdraw from a accont
  *View a account balance
- *Call an end day function that saves the file, prints the total amount held by the bank, and the net deposits/withdrawals for the day
+ *Call an end day function that saves the file, prints the total amount held by the bank, and the net deposits/withdrawals for the day.
  *
  * @Santoso Winatan
  * @21/04/26
@@ -16,14 +16,13 @@ import java.util.Scanner;
 public class MainSystem
 {
     ArrayList <Account> database = new ArrayList<Account>();
-    AccountDatabase accountDatabase= new AccountDatabase();
-    ReliableInput reliableInput= new ReliableInput();
-
+    
     /**
      * This checks what the customer wants to do then calls the right function
      */
-    public MainSystem()
+    public static void main(String[] args)
     {
+        AccountDatabase accountDatabase= new AccountDatabase();
         Scanner keyboard = new Scanner (System.in);
         accountDatabase.loadFromFile();// Loads from the file so that the database is filled
 
@@ -67,7 +66,10 @@ public class MainSystem
      * this is:
      * viewing accounts, setting accounts balances, deleting accounts
      */
-    public float editAccount( String userInput){
+    public static float editAccount( String userInput){
+        AccountDatabase accountDatabase= new AccountDatabase();
+        ReliableInput reliableInput= new ReliableInput();
+        
         Scanner keyboard = new Scanner (System.in);
 
         final String VIEW_ACCOUNT = "VIEW";
@@ -130,12 +132,12 @@ public class MainSystem
 
             if(accountChangeType.equals(ACCOUNT_DEPOSIT)){
                 System.out.println("Please enter the amount to be deposited");
-                
+
                 changeAmount=reliableInput.readNum(NEGATIVE_ALLOWED);
-                
+
                 accountDatabase.setAccountBalance(customerID,changeAmount,ACCOUNT_DEPOSIT);
                 dailyChangeAmount=dailyChangeAmount+changeAmount;
-                
+
             }else if(accountChangeType.equals(ACCOUNT_WITHDRAWAL)){
                 while (rightAmount==NOT_MADE){
                     System.out.println("Please enter the amount to be withdrawn");
@@ -180,7 +182,10 @@ public class MainSystem
     /**
      * This handles creating an account which involves setting the customer name, account number,customer adress, account type and the current balance
      */
-    public void createAccount( String changeType){
+    public static void createAccount( String changeType){
+        AccountDatabase accountDatabase= new AccountDatabase();
+        ReliableInput reliableInput= new ReliableInput();
+        
         Scanner keyboard = new Scanner (System.in);
 
         final float OVERDRAFT_LIMIT= -1000; //Change this if overdraft limit changes
@@ -238,7 +243,9 @@ public class MainSystem
     /**
      * This gets the total balance of the bank,net deposits/withdrawals prints them then saves and exits the program.
      */    
-    public void endDay( float netCashflow ){
+    public static void endDay( float netCashflow ){
+        AccountDatabase accountDatabase= new AccountDatabase();
+       
         float  totalBalance=accountDatabase.getTotalBalance(); // Gets balance of all accounts in the bank
 
         System.out.println("The banks total balance is: $"+ totalBalance);// Prints the total amount of money held by all accounts in the banks database

@@ -1,7 +1,7 @@
 #BlueJ class context
 comment0.target=MainSystem
-comment1.params=
-comment1.target=MainSystem()
+comment1.params=args
+comment1.target=void\ main(java.lang.String[])
 comment1.text=\r\n\ This\ checks\ what\ the\ customer\ wants\ to\ do\ then\ calls\ the\ right\ function\r\n
 comment2.params=userInput
 comment2.target=float\ editAccount(java.lang.String)
