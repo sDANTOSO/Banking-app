@@ -1,12 +1,6 @@
-------------------------------------------------------------------------
-This is the project README file. Here, you should describe your project.
-Tell the reader (someone who does not know anything about this project)
-all they need to know. The comments should usually include at least:
-------------------------------------------------------------------------
 
-PROJECT TITLE:
-PURPOSE OF PROJECT:
-VERSION or DATE:
-HOW TO START THIS PROJECT:
-AUTHORS:
-USER INSTRUCTIONS:
+PROJECT TITLE:Banking App
+PURPOSE OF PROJECT:A program where you can view and edit accounts from a txt file and then save them back to a txt file
+VERSION or DATE:Final version
+HOW TO START THIS PROJECT:Run a new MainSystem()
+AUTHORS:S.H.W.
