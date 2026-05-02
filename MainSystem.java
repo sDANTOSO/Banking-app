@@ -15,14 +15,15 @@ import java.util.ArrayList;
 import java.util.Scanner;
 public class MainSystem
 {
-    ArrayList <Account> database = new ArrayList<Account>();
-    
+    public static ArrayList <Account> database = new ArrayList<Account>();
+    public static AccountDatabase accountDatabase= new AccountDatabase();
+    public static ReliableInput reliableInput= new ReliableInput();
+
     /**
      * This checks what the customer wants to do then calls the right function
      */
-    public static void main(String[] args)
-    {
-        AccountDatabase accountDatabase= new AccountDatabase();
+    public static void main(String[] args){
+
         Scanner keyboard = new Scanner (System.in);
         accountDatabase.loadFromFile();// Loads from the file so that the database is filled
 
@@ -67,9 +68,6 @@ public class MainSystem
      * viewing accounts, setting accounts balances, deleting accounts
      */
     public static float editAccount( String userInput){
-        AccountDatabase accountDatabase= new AccountDatabase();
-        ReliableInput reliableInput= new ReliableInput();
-        
         Scanner keyboard = new Scanner (System.in);
 
         final String VIEW_ACCOUNT = "VIEW";
@@ -183,9 +181,6 @@ public class MainSystem
      * This handles creating an account which involves setting the customer name, account number,customer adress, account type and the current balance
      */
     public static void createAccount( String changeType){
-        AccountDatabase accountDatabase= new AccountDatabase();
-        ReliableInput reliableInput= new ReliableInput();
-        
         Scanner keyboard = new Scanner (System.in);
 
         final float OVERDRAFT_LIMIT= -1000; //Change this if overdraft limit changes
@@ -244,8 +239,6 @@ public class MainSystem
      * This gets the total balance of the bank,net deposits/withdrawals prints them then saves and exits the program.
      */    
     public static void endDay( float netCashflow ){
-        AccountDatabase accountDatabase= new AccountDatabase();
-       
         float  totalBalance=accountDatabase.getTotalBalance(); // Gets balance of all accounts in the bank
 
         System.out.println("The banks total balance is: $"+ totalBalance);// Prints the total amount of money held by all accounts in the banks database

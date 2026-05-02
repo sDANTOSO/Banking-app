@@ -1,4 +1,0 @@
-Onika Maraj-Petty;08-0101-0423087-00;14 Mt View St, Wellington;SAVINGS;0.05999756
-Christopher Wallace;08-0101-0684341-02;48B Mitchel Way, Wellington;EVERYDAY;5849.75
-Terrence Thornton;08-0104-0476665-00;118 The Shoreline, Wellington;CURRENT;4749.0
-Terrence Thornton;08-0104-0476665-01;118 The Shoreline, Wellington;CURRENT;-251.0
