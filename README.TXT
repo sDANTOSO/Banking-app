@@ -19,4 +19,4 @@ How was this project made?
 This project was made mainly using w3 schools, and coding in Bluej, it was for my Computer Science class so I had to use Java and .txt file reading.
 
 AI
-I did not use AI at all to create the game or the assets 
+I did not use AI at all to code or fix any problems I came across during development
